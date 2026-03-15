@@ -1,0 +1,29 @@
+{% extends "admin/layout.html" %}
+{% set title = (('Submission #' ~ submission['id']) if g.lang=='en' else ('طلب رقم ' ~ submission['id'])) %}
+
+{% block admin_content %}
+  <h3>{{ title }}</h3>
+  <div class="admin-kv">
+    <div><strong>{% if g.lang=='ar' %}المنشئ{% else %}Created by{% endif %}:</strong> {{ creator['username'] if creator else submission['created_by_user_id'] }}</div>
+    <div><strong>{% if g.lang=='ar' %}الهدف{% else %}Target{% endif %}:</strong> {{ submission['target_table'] }}</div>
+    <div><strong>{% if g.lang=='ar' %}الإجراء{% else %}Action{% endif %}:</strong> {{ submission['action'] }}</div>
+    <div><strong>{% if g.lang=='ar' %}معرف السجل{% else %}Target ID{% endif %}:</strong> {{ submission['target_id'] or '-' }}</div>
+    <div><strong>{% if g.lang=='ar' %}الحالة{% else %}Status{% endif %}:</strong> <span class="badge badge-soft">{{ submission['status'] }}</span></div>
+  </div>
+
+  <div class="industris-space-20"></div>
+  <h4>{% if g.lang=='ar' %}بيانات التغيير (JSON){% else %}Change payload (JSON){% endif %}</h4>
+  <pre class="payload-pre">{{ payload | tojson(indent=2, ensure_ascii=false) }}</pre>
+
+  <div class="industris-space-20"></div>
+  <form method="post" action="{{ url_for('admin_review_decision', submission_id=submission['id']) }}" class="admin-form">
+    <div class="form-group">
+      <label>{% if g.lang=='ar' %}ملاحظة للمطور (اختياري){% else %}Reviewer note (optional){% endif %}</label>
+      <textarea class="form-control" name="note" rows="3" placeholder="{% if g.lang=='ar' %}ملاحظات تحسين أو سبب الرفض...{% else %}Improvement notes or rejection reason...{% endif %}"></textarea>
+    </div>
+    <button class="btn btn-primary" name="decision" value="approve" type="submit">{% if g.lang=='ar' %}اعتماد{% else %}Approve{% endif %}</button>
+    <button class="btn btn-border" name="decision" value="reject" type="submit">{% if g.lang=='ar' %}رفض{% else %}Reject{% endif %}</button>
+    <a class="btn btn-default" href="{{ url_for('admin_review') }}">{% if g.lang=='ar' %}عودة{% else %}Back{% endif %}</a>
+  </form>
+{% endblock %}
+

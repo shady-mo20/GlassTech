@@ -1,0 +1,169 @@
+{% extends "base.html" %}
+{% block title %}{{ t('nav.home') }} | {{ t('site.name') }}{% endblock %}
+
+{% block content %}
+  {# Hero: reuse Envato slider structure but feed real machine image/content #}
+  <div class="slider" data-show="1" data-arrow="true">
+    <div>
+      <div class="slider-item">
+        <img src="{{ url_for('static', filename=featured.image_path) if featured else url_for('static', filename='images/machines/glass_tempering_furnace.png') }}" alt="" class="hero-img">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-10">
+              <div class="slider-content">
+                <h4>{{ t('home.hero.kicker') }}</h4>
+                <h1>{{ t('home.hero.title') }}</h1>
+                <p class="hero-subtitle">{{ t('home.hero.subtitle') }}</p>
+                <a class="btn btn-primary" href="{{ url_for('machines') }}">{{ t('home.hero.cta.primary') }}</a>
+                <a class="btn btn-border hero-btn-secondary" href="{{ url_for('contact') }}">{{ t('home.hero.cta.secondary') }}</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {# Featured machine #}
+  <section class="no-padding-bottom">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <h4 class="text-primary">{{ t('home.featured.kicker') }}</h4>
+          <h2>
+            {% if featured %}
+              {{ featured['title_ar'] if g.lang=='ar' else featured['title_en'] }}
+            {% else %}
+              {{ t('home.featured.title') }}
+            {% endif %}
+          </h2>
+          <div class="industris-space-30"></div>
+        </div>
+      </div>
+      <div class="row flex-row">
+        <div class="col-md-6 align-self-center">
+          <p class="lead">
+            {% if featured %}
+              {{ featured['short_desc_ar'] if g.lang=='ar' else featured['short_desc_en'] }}
+            {% else %}
+              {{ t('home.hero.subtitle') }}
+            {% endif %}
+          </p>
+          <div class="industris-space-20"></div>
+          {% if featured %}
+            <a href="{{ url_for('machine_detail', slug=featured['slug']) }}" class="btn btn-primary">
+              {{ t('home.featured.cta') }} <i class="icon ion-md-add-circle-outline"></i>
+            </a>
+          {% endif %}
+          <a href="{{ url_for('specifications') }}" class="btn btn-border">{{ t('home.specs.cta') }}</a>
+          <div class="industris-space-sm"></div>
+        </div>
+        <div class="col-md-6">
+          <img src="{{ url_for('static', filename=featured.image_path) if featured else url_for('static', filename='images/machines/glass_tempering_furnace.png') }}" alt="">
+        </div>
+      </div>
+    </div>
+    <div class="industris-space-90"></div>
+  </section>
+
+  {# Machine family preview: reuse services card language but show machines #}
+  <section class="bg-light padding-bottom-medium">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <h4 class="text-primary">{{ t('home.family.kicker') }}</h4>
+          <h2>{{ t('home.family.title') }}</h2>
+          <div class="industris-space-30"></div>
+        </div>
+      </div>
+      <div class="row">
+        {% for m in machines[:6] %}
+          <div class="col-md-4 col-sm-6 col-xs-12">
+            <div class="services-box box-shadow-hover premium-card">
+              <div class="services-icon">
+                <img src="{{ url_for('static', filename=m['image_path']) }}" alt="">
+              </div>
+              <div class="services-content">
+                <h3>
+                  <a href="{{ url_for('machine_detail', slug=m['slug']) }}">
+                    {{ m['title_ar'] if g.lang=='ar' else m['title_en'] }}
+                  </a>
+                </h3>
+                <p>{{ m['short_desc_ar'] if g.lang=='ar' else m['short_desc_en'] }}</p>
+                <a class="view-detail" href="{{ url_for('machine_detail', slug=m['slug']) }}">
+                  {% if g.lang=='ar' %}عرض التفاصيل{% else %}View details{% endif %}
+                  <i class="icon ion-md-add-circle-outline"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  {# Process preview #}
+  <section class="bg-default">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <h4 class="text-primary">{{ t('home.process.kicker') }}</h4>
+          <h2 class="text-white">{{ t('home.process.title') }}</h2>
+          <div class="industris-space-30"></div>
+        </div>
+      </div>
+      <div class="row">
+        {% for s in steps %}
+          <div class="col-md-3 col-sm-6">
+            <div class="process process-light">
+              <div class="process-icon"><i class="icon {{ s['icon'] or 'ion-ios-rocket' }}"></i></div>
+              <h4>
+                <span class="step-no">{{ s['step_no'] }}.</span>
+                {{ s['title_ar'] if g.lang=='ar' else s['title_en'] }}
+              </h4>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+      <div class="industris-space-30"></div>
+      <div class="text-center">
+        <a href="{{ url_for('how_it_works') }}" class="btn btn-primary">{{ t('home.process.cta') }}</a>
+      </div>
+    </div>
+  </section>
+
+  {# Gallery teaser #}
+  <section class="padding-bottom-medium">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8">
+          <h4 class="text-primary">{{ t('home.gallery.kicker') }}</h4>
+          <h2 class="no-margin-bottom">{{ t('home.gallery.title') }}</h2>
+        </div>
+        <div class="col-md-4 text-right align-self-end">
+          <a class="industris-lineheight" href="{{ url_for('gallery') }}">{{ t('home.gallery.cta') }}<i class="icon ion-md-add-circle-outline"></i></a>
+        </div>
+      </div>
+      <div class="industris-space-50"></div>
+
+      <div class="row">
+        {% for item in gallery %}
+          <div class="col-md-4 col-sm-6 col-xs-12">
+            <div class="project-item gallery-item col-lg-12">
+              <div class="inner">
+                <a href="{{ url_for('static', filename=item['image_path']) }}" class="image-link imghvr-shutter-out-vert" title="{{ item['title_ar'] if g.lang=='ar' else item['title_en'] }}">
+                  <img src="{{ url_for('static', filename=item['image_path']) }}" alt="">
+                </a>
+                <div class="gallery-caption">
+                  <h4>{{ item['title_ar'] if g.lang=='ar' else item['title_en'] }}</h4>
+                  <p>{{ item['description_ar'] if g.lang=='ar' else item['description_en'] }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+{% endblock %}
+

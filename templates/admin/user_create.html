@@ -1,0 +1,42 @@
+{% extends "admin/layout.html" %}
+{% set title = t('admin.users.create') %}
+
+{% block admin_content %}
+  <h3>{{ t('admin.users.create') }}</h3>
+  <p class="small-muted">
+    {% if g.lang=='ar' %}
+      أنشئ مستخدمًا جديدًا مع تعيين الدور. يفضل إنشاء مطورين فقط، وإبقاء دور المسؤول محدودًا.
+    {% else %}
+      Create a new user and assign a role. Prefer creating Developers, and keep Admin access limited.
+    {% endif %}
+  </p>
+
+  <form method="post" class="admin-form">
+    <div class="row">
+      <div class="col-md-6 form-group">
+        <label>{{ t('admin.users.username') }} *</label>
+        <input class="form-control" name="username" required>
+      </div>
+      <div class="col-md-6 form-group">
+        <label>{{ t('admin.users.email') }} *</label>
+        <input class="form-control" name="email" type="email" required>
+      </div>
+      <div class="col-md-6 form-group">
+        <label>{{ t('admin.users.role') }} *</label>
+        <select class="form-control" name="role" required>
+          <option value="developer">{% if g.lang=='ar' %}مطور{% else %}Developer{% endif %}</option>
+          <option value="admin_developer">{% if g.lang=='ar' %}مسؤول/مطور{% else %}Admin Developer{% endif %}</option>
+        </select>
+      </div>
+      <div class="col-md-6 form-group">
+        <label>{{ t('admin.users.password') }} *</label>
+        <input class="form-control" name="password" type="password" required>
+      </div>
+    </div>
+
+    <div class="industris-space-20"></div>
+    <button class="btn btn-primary" type="submit">{{ t('admin.users.create_submit') }}</button>
+    <a class="btn btn-border" href="{{ url_for('admin_users') }}">{% if g.lang=='ar' %}إلغاء{% else %}Cancel{% endif %}</a>
+  </form>
+{% endblock %}
+

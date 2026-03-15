@@ -1,0 +1,117 @@
+{# 
+  Navbar extracted from Envato template and adapted for Flask routes + bilingual support.
+
+  Key requirements:
+  - Visible language switcher
+  - Persist language selection server-side (session)
+  - Provide clear separation between public and admin
+#}
+<header id="site-header" class="site-header mobile-header-blue header-style-1">
+  <div id="header_topbar" class="header-topbar md-hidden sm-hidden clearfix">
+    <div class="container-custom">
+      <div class="row">
+        <div class="col-md-8">
+          <ul class="topbar-left">
+            <li><i class="icon ion-md-pin"></i>{{ t('footer.location') }}</li>
+            <li><i class="icon ion-md-call"></i>{{ t('footer.phone') }}</li>
+            <li><i class="icon ion-md-mail"></i>{{ t('footer.email') }}</li>
+          </ul>
+        </div>
+        <div class="col-md-4">
+          <ul class="topbar-right pull-right">
+            <li class="topbar-languages">
+              <form method="post" action="{{ url_for('set_lang', lang_code='ar' if g.lang=='en' else 'en') }}" class="lang-form">
+                <input type="hidden" name="next" value="{{ request.path }}">
+                <button type="submit" class="linklike">
+                  {% if g.lang == 'en' %}{{ t('nav.lang.ar') }}{% else %}{{ t('nav.lang.en') }}{% endif %}
+                  <i class="icon ion-ios-swap"></i>
+                </button>
+              </form>
+            </li>
+            {% if g.user %}
+              <li class="topbar-login"><a href="{{ url_for('admin_dashboard') }}">{{ t('nav.admin') }}</a></li>
+              <li class="topbar-login">
+                <form method="post" action="{{ url_for('logout') }}" class="logout-form">
+                  <button type="submit" class="linklike">{{ t('nav.logout') }}</button>
+                </form>
+              </li>
+            {% else %}
+              <li class="topbar-login"><a href="{{ url_for('login') }}">{{ t('nav.login') }}</a></li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="main-header md-hidden sm-hidden">
+    <div class="container-custom">
+      <div class="row">
+        <div class="col-md-3">
+          <div class="logo-brand">
+            <a href="{{ url_for('home') }}" class="brand">
+              <img src="{{ url_for('static', filename='vendor/industris/images/logo.png') }}" alt="{{ t('site.name') }}">
+            </a>
+          </div>
+        </div>
+        <div class="col-md-9">
+          <div class="main-navigation">
+            <ul id="primary-menu" class="menu">
+              <li class="menu-item"><a href="{{ url_for('home') }}">{{ t('nav.home') }}</a></li>
+              <li class="menu-item"><a href="{{ url_for('machines') }}">{{ t('nav.machines') }}</a></li>
+              <li class="menu-item"><a href="{{ url_for('how_it_works') }}">{{ t('nav.how') }}</a></li>
+              <li class="menu-item"><a href="{{ url_for('specifications') }}">{{ t('nav.specs') }}</a></li>
+              <li class="menu-item"><a href="{{ url_for('applications') }}">{{ t('nav.apps') }}</a></li>
+              <li class="menu-item"><a href="{{ url_for('gallery') }}">{{ t('nav.gallery') }}</a></li>
+              <li class="menu-item"><a href="{{ url_for('about') }}">{{ t('nav.about') }}</a></li>
+              <li class="menu-item"><a href="{{ url_for('contact') }}">{{ t('nav.contact') }}</a></li>
+            </ul>
+            <a href="{{ url_for('contact') }}" class="btn btn-primary nav-cta">
+              {{ t('home.hero.cta.secondary') }}<i class="icon ion-md-paper-plane"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile header (template style) -->
+  <div class="mobile-header">
+    <div class="container-custom">
+      <div class="row">
+        <div class="col-xs-6">
+          <div class="logo-brand-mobile">
+            <a href="{{ url_for('home') }}">
+              <img src="{{ url_for('static', filename='vendor/industris/images/logo.png') }}" alt="{{ t('site.name') }}">
+            </a>
+          </div>
+        </div>
+        <div class="col-xs-6">
+          <div id="mmenu_toggle"><button></button></div>
+        </div>
+        <div class="col-xs-12">
+          <div class="mobile-nav">
+            <ul id="primary-menu-mobile" class="mobile-menu">
+              <li class="menu-item"><a href="{{ url_for('home') }}">{{ t('nav.home') }}</a></li>
+              <li class="menu-item"><a href="{{ url_for('machines') }}">{{ t('nav.machines') }}</a></li>
+              <li class="menu-item"><a href="{{ url_for('how_it_works') }}">{{ t('nav.how') }}</a></li>
+              <li class="menu-item"><a href="{{ url_for('specifications') }}">{{ t('nav.specs') }}</a></li>
+              <li class="menu-item"><a href="{{ url_for('applications') }}">{{ t('nav.apps') }}</a></li>
+              <li class="menu-item"><a href="{{ url_for('gallery') }}">{{ t('nav.gallery') }}</a></li>
+              <li class="menu-item"><a href="{{ url_for('about') }}">{{ t('nav.about') }}</a></li>
+              <li class="menu-item"><a href="{{ url_for('contact') }}">{{ t('nav.contact') }}</a></li>
+              <li class="menu-item"><a href="{{ url_for('login') }}">{{ t('nav.login') }}</a></li>
+            </ul>
+            <form method="post" action="{{ url_for('set_lang', lang_code='ar' if g.lang=='en' else 'en') }}" class="lang-form-mobile">
+              <input type="hidden" name="next" value="{{ request.path }}">
+              <button type="submit" class="btn btn-border btn-full-width">
+                {% if g.lang == 'en' %}{{ t('nav.lang.ar') }}{% else %}{{ t('nav.lang.en') }}{% endif %}
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+

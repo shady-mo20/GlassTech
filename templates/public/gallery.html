@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block title %}{{ t('nav.gallery') }} | {{ t('site.name') }}{% endblock %}
+
+{% block content %}
+  {% set header_bg = url_for('static', filename='images/machines/production_line.png') %}
+  {% set title = t('nav.gallery') %}
+  {% set breadcrumbs = [
+    {'label': t('nav.home'), 'url': url_for('home')},
+    {'label': t('nav.gallery'), 'url': None}
+  ] %}
+  {% include "includes/page_header.html" %}
+
+  <section class="padding-bottom-medium">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <h3>{% if g.lang=='ar' %}معرض الماكينات{% else %}Machine media gallery{% endif %}</h3>
+          <p class="lead">
+            {% if g.lang=='ar' %}
+              صور حقيقية للمنظومة مع عناوين ووصف ثنائي اللغة، وتصنيف يساعد على استعراض سريع ومنظم.
+            {% else %}
+              Real machine images with bilingual titles/descriptions and clear category tags for fast scanning.
+            {% endif %}
+          </p>
+        </div>
+      </div>
+
+      <div class="industris-space-30"></div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="project-filter" data-column="">
+            <div id="filters" class="cat-filter">
+              <a href="#" data-filter="*" class="filter-item all-cat selected">{% if g.lang=='ar' %}الكل{% else %}All{% endif %}</a>
+              {% for c in categories %}
+                <a href="#" data-filter=".cat-{{ c|replace(' ','-')|lower }}" class="filter-item">{{ c }}</a>
+              {% endfor %}
+            </div>
+            <div id="projects" class="project-grid gallery row">
+              {% for item in items %}
+                {% set cat = (item['category'] or 'Other') %}
+                <div class="project-item cat-{{ cat|replace(' ','-')|lower }} col-lg-4 col-sm-6">
+                  <div class="inner gallery-card">
+                    <a href="{{ url_for('static', filename=item['image_path']) }}" class="image-link imghvr-shutter-out-vert" title="{{ item['title_ar'] if g.lang=='ar' else item['title_en'] }}">
+                      <img src="{{ url_for('static', filename=item['image_path']) }}" alt="">
+                    </a>
+                    <div class="gallery-caption">
+                      <div class="gallery-tag">{{ cat }}</div>
+                      <h4>{{ item['title_ar'] if g.lang=='ar' else item['title_en'] }}</h4>
+                      <p>{{ item['description_ar'] if g.lang=='ar' else item['description_en'] }}</p>
+                    </div>
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}
+

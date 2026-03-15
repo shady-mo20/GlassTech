@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}{{ t('nav.machines') }} | {{ t('site.name') }}{% endblock %}
+
+{% block content %}
+  {% set header_bg = url_for('static', filename='images/machines/production_line.png') %}
+  {% set title = t('nav.machines') %}
+  {% set breadcrumbs = [
+    {'label': t('nav.home'), 'url': url_for('home')},
+    {'label': t('nav.machines'), 'url': None}
+  ] %}
+  {% include "includes/page_header.html" %}
+
+  <section class="padding-bottom-medium">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8">
+          <h3>{% if g.lang=='ar' %}منظومة متكاملة لمعالجة الزجاج{% else %}A complete glass processing ecosystem{% endif %}</h3>
+          <p class="lead">
+            {% if g.lang=='ar' %}
+              نقدم منظومة ماكينات مترابطة تشمل التقسية والقطع والنقش والتخزين وخطوط المناولة الآلية، بهدف رفع الإنتاجية وتحسين جودة المخرجات وتقليل الهدر.
+            {% else %}
+              A tightly integrated lineup covering tempering, cutting, engraving, storage, and automated handling—built to improve throughput, output quality, and material utilization.
+            {% endif %}
+          </p>
+        </div>
+      </div>
+
+      <div class="industris-space-30"></div>
+      <div class="row">
+        {% for m in machines %}
+          <div class="col-md-4 col-sm-6 col-xs-12">
+            <div class="services-box services-box-img premium-card services-box-img-hoverable">
+              <div class="services-overlay"></div>
+              <img src="{{ url_for('static', filename=m['image_path']) }}" alt="">
+              <div class="services-content">
+                <h3><a href="{{ url_for('machine_detail', slug=m['slug']) }}">{{ m['title_ar'] if g.lang=='ar' else m['title_en'] }}</a></h3>
+                <p>{{ m['short_desc_ar'] if g.lang=='ar' else m['short_desc_en'] }}</p>
+                <a class="view-detail" href="{{ url_for('machine_detail', slug=m['slug']) }}">
+                  {% if g.lang=='ar' %}عرض التفاصيل{% else %}View details{% endif %}
+                  <i class="icon ion-md-add-circle-outline"></i>
+                </a>
+              </div>
+            </div>
+            <div class="industris-space-sm"></div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+{% endblock %}
+

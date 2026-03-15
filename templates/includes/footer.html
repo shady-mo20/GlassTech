@@ -1,0 +1,78 @@
+<footer id="site-footer" class="site-footer bg-footer">
+  <div class="main-footer">
+    <div class="container-custom">
+      <div class="row">
+        <div class="col-md-4 col-sm-6">
+          <div class="widget-footer">
+            <div class="widget widget_media_image">
+              <a href="{{ url_for('home') }}">
+                <img src="{{ url_for('static', filename='vendor/industris/images/logo-footer.png') }}" alt="{{ t('site.name') }}">
+              </a>
+            </div>
+            <div class="widget_text widget widget_custom_html">
+              <div class="textwidget custom-html-widget">
+                <p>{{ t('site.tagline') }}</p>
+                <p class="small-muted">{{ t('footer.rights') }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4 col-sm-6">
+          <div class="widget-footer">
+            <div class="widget_text widget widget_custom_html padding-left footer-links-compact">
+              <div class="textwidget custom-html-widget">
+                <ul>
+                  <li><a href="{{ url_for('machines') }}">{{ t('nav.machines') }}</a></li>
+                  <li><a href="{{ url_for('how_it_works') }}">{{ t('nav.how') }}</a></li>
+                  <li><a href="{{ url_for('specifications') }}">{{ t('nav.specs') }}</a></li>
+                  <li><a href="{{ url_for('gallery') }}">{{ t('nav.gallery') }}</a></li>
+                  <li><a href="{{ url_for('contact') }}">{{ t('nav.contact') }}</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4 col-sm-12">
+          <div class="widget-footer">
+            <div class="widget_text widget widget_custom_html padding-left">
+              <div class="textwidget custom-html-widget">
+                <ul class="footer-contact">
+                  <li><i class="icon ion-md-pin"></i>{{ t('footer.location') }}</li>
+                  <li><i class="icon ion-md-call"></i>{{ t('footer.phone') }}</li>
+                  <li><i class="icon ion-md-mail"></i>{{ t('footer.email') }}</li>
+                </ul>
+              </div>
+            </div>
+            <div class="footer-social ot-socials bg-white">
+              <span class="follow-label">{% if g.lang=='ar' %}تابعنا:{% else %}Follow us:{% endif %}</span>
+              <a target="_blank" href="#" rel="noopener noreferrer"><i class="icon ion-logo-linkedin"></i></a>
+              <a target="_blank" href="#" rel="noopener noreferrer"><i class="icon ion-logo-youtube"></i></a>
+              <a target="_blank" href="#" rel="noopener noreferrer"><i class="icon ion-logo-twitter"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="container-custom">
+      <div class="row">
+        <div class="col-md-12">
+          <ul class="topbar-left">
+            <li><i class="icon ion-md-pin"></i>{{ t('footer.location') }}</li>
+            <li><i class="icon ion-md-call"></i>{{ t('footer.phone') }}</li>
+            <li><i class="icon ion-md-mail"></i>{{ t('footer.email') }}</li>
+          </ul>
+          <a id="back-to-top" href="#" class="btn btn-back-to-top pull-right">
+            {% if g.lang=='ar' %}عودة للأعلى{% else %}Back to top{% endif %}
+            <i class="icon ion-ios-arrow-dropup-circle"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+

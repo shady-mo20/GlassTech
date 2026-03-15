@@ -1,0 +1,61 @@
+{% extends "admin/layout.html" %}
+{% set title = t('admin.machines') %}
+
+{% block admin_content %}
+  <div class="row">
+    <div class="col-md-8">
+      <h3>{{ t('admin.machines') }}</h3>
+      <p class="small-muted">
+        {% if g.lang=='ar' %}
+          يمكنك تعديل الماكينات مباشرة إذا كنت مسؤولًا، أو إرسال تغييرات للمراجعة إذا كنت مطورًا.
+        {% else %}
+          Admin can edit directly; Developer submits changes for approval.
+        {% endif %}
+      </p>
+    </div>
+    <div class="col-md-4 text-right">
+      <a href="{{ url_for('admin_machine_edit') }}" class="btn btn-primary">{% if g.lang=='ar' %}إضافة ماكينة{% else %}Add machine{% endif %}</a>
+    </div>
+  </div>
+
+  <div class="industris-space-20"></div>
+  <div class="table-responsive">
+    <table class="table premium-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>{% if g.lang=='ar' %}العنوان{% else %}Title{% endif %}</th>
+          <th>{% if g.lang=='ar' %}التصنيف{% else %}Category{% endif %}</th>
+          <th>{% if g.lang=='ar' %}مميز{% else %}Featured{% endif %}</th>
+          <th>{% if g.lang=='ar' %}ترتيب{% else %}Order{% endif %}</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for m in machines %}
+          <tr>
+            <td>{{ m['id'] }}</td>
+            <td>
+              <strong>{{ m['title_ar'] if g.lang=='ar' else m['title_en'] }}</strong><br>
+              <span class="small-muted">{{ m['slug'] }}</span>
+            </td>
+            <td>{{ m['category'] or '-' }}</td>
+            <td>{{ '✓' if m['is_featured']==1 else '-' }}</td>
+            <td>{{ m['sort_order'] }}</td>
+            <td class="text-right">
+              <a class="btn btn-default btn-xs" href="{{ url_for('machine_detail', slug=m['slug']) }}">{% if g.lang=='ar' %}عرض{% else %}View{% endif %}</a>
+              <a class="btn btn-primary btn-xs" href="{{ url_for('admin_machine_edit', id=m['id']) }}">{% if g.lang=='ar' %}تعديل{% else %}Edit{% endif %}</a>
+              {% if g.user['role']=='admin_developer' %}
+                <form method="post" action="{{ url_for('admin_machine_delete') }}" style="display:inline" onsubmit="return confirm('Delete?')">
+                  <input type="hidden" name="id" value="{{ m['id'] }}">
+                  <button class="btn btn-border btn-xs" type="submit">{% if g.lang=='ar' %}حذف{% else %}Delete{% endif %}</button>
+                </form>
+              {% endif %}
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}
+

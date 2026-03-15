@@ -1,0 +1,155 @@
+{% extends "base.html" %}
+{% block title %}{{ t('nav.apps') }} | {{ t('site.name') }}{% endblock %}
+
+{% block content %}
+  {% set header_bg = url_for('static', filename='images/machines/production_line.png') %}
+  {% set title = t('nav.apps') %}
+  {% set breadcrumbs = [
+    {'label': t('nav.home'), 'url': url_for('home')},
+    {'label': t('nav.apps'), 'url': None}
+  ] %}
+  {% include "includes/page_header.html" %}
+
+  <section class="padding-bottom-medium">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-9">
+          <h3>{% if g.lang=='ar' %}تطبيقات صناعية موثوقة لزجاج الأمان والمعمار والتشطيب{% else %}Industrial applications for safety glass, architecture, and precision finishing{% endif %}</h3>
+          <p class="lead">
+            {% if g.lang=='ar' %}
+              تدعم المنظومة قطاعات متعددة عبر جودة تقسية ثابتة، وتحضير ألواح دقيق، وتكامل تشغيل يقلل التوقفات ويحسن الاعتمادية التشغيلية.
+            {% else %}
+              The ecosystem supports multiple sectors through stable tempering quality, precise sheet preparation, and integrated flow that reduces downtime and improves operational reliability.
+            {% endif %}
+          </p>
+        </div>
+      </div>
+
+      <div class="industris-space-30"></div>
+
+      <div class="row">
+        <div class="col-md-4 col-sm-6">
+          <div class="icon-box premium-card">
+            <div class="icon-box-title">
+              <i class="icon ion-md-business"></i>
+              <h4>{% if g.lang=='ar' %}الزجاج المعماري{% else %}Architectural glass{% endif %}</h4>
+            </div>
+            <p>
+              {% if g.lang=='ar' %}
+                واجهات ونوافذ ومقاطع كبيرة تتطلب ثباتًا في الجودة وتحكمًا في التشوهات وإنتاجية قابلة للتوسع.
+              {% else %}
+                Facades and large-format panels require stable output, controlled distortion, and scalable throughput.
+              {% endif %}
+            </p>
+          </div>
+          <div class="industris-space-20"></div>
+        </div>
+
+        <div class="col-md-4 col-sm-6">
+          <div class="icon-box premium-card">
+            <div class="icon-box-title">
+              <i class="icon ion-md-shield"></i>
+              <h4>{% if g.lang=='ar' %}زجاج الأمان{% else %}Safety glass{% endif %}</h4>
+            </div>
+            <p>
+              {% if g.lang=='ar' %}
+                التقسية الصناعية تحسن مقاومة الصدمات وتدعم متطلبات السلامة في المباني والمرافق العامة.
+              {% else %}
+                Industrial tempering improves impact resistance and supports safety requirements for buildings and public facilities.
+              {% endif %}
+            </p>
+          </div>
+          <div class="industris-space-20"></div>
+        </div>
+
+        <div class="col-md-4 col-sm-6">
+          <div class="icon-box premium-card">
+            <div class="icon-box-title">
+              <i class="icon ion-md-color-palette"></i>
+              <h4>{% if g.lang=='ar' %}زجاج زخرفي وتشغيلي{% else %}Decorative & functional glass{% endif %}</h4>
+            </div>
+            <p>
+              {% if g.lang=='ar' %}
+                النقش والتشكيل الدقيق يدعمان العلامات الوظيفية والتفاصيل الجمالية مع ثبات في الدقة.
+              {% else %}
+                CNC engraving supports functional markings and refined detailing with consistent machining accuracy.
+              {% endif %}
+            </p>
+          </div>
+          <div class="industris-space-20"></div>
+        </div>
+
+        <div class="col-md-4 col-sm-6">
+          <div class="icon-box premium-card">
+            <div class="icon-box-title">
+              <i class="icon ion-md-settings"></i>
+              <h4>{% if g.lang=='ar' %}مصانع إنتاج مستمر{% else %}Continuous production facilities{% endif %}</h4>
+            </div>
+            <p>
+              {% if g.lang=='ar' %}
+                تكامل المناولة والتخزين يقلل عنق الزجاجة ويرفع استقرار التشغيل ضمن خطوط إنتاج طويلة.
+              {% else %}
+                Handling and storage integration reduces bottlenecks and stabilizes long-run production lines.
+              {% endif %}
+            </p>
+          </div>
+          <div class="industris-space-20"></div>
+        </div>
+
+        <div class="col-md-4 col-sm-6">
+          <div class="icon-box premium-card">
+            <div class="icon-box-title">
+              <i class="icon ion-md-home"></i>
+              <h4>{% if g.lang=='ar' %}التطبيقات الداخلية{% else %}Interior applications{% endif %}</h4>
+            </div>
+            <p>
+              {% if g.lang=='ar' %}
+                أبواب، فواصل، درابزين، وحلول تصميم تتطلب تشطيبًا نظيفًا وحواف دقيقة وتحكمًا في الجودة.
+              {% else %}
+                Doors, partitions, railings, and design solutions requiring clean finishing, accurate edges, and consistent QC.
+              {% endif %}
+            </p>
+          </div>
+          <div class="industris-space-20"></div>
+        </div>
+
+        <div class="col-md-4 col-sm-6">
+          <div class="icon-box premium-card">
+            <div class="icon-box-title">
+              <i class="icon ion-md-git-branch"></i>
+              <h4>{% if g.lang=='ar' %}خطوط قابلة للتوسع{% else %}Scalable manufacturing lines{% endif %}</h4>
+            </div>
+            <p>
+              {% if g.lang=='ar' %}
+                تصميم معياري يسهّل إضافة محطات وتحسين سعة الإنتاج دون كسر سير العمل.
+              {% else %}
+                Modular architecture supports adding stations and increasing capacity without breaking workflow continuity.
+              {% endif %}
+            </p>
+          </div>
+          <div class="industris-space-20"></div>
+        </div>
+      </div>
+
+      <div class="industris-space-30"></div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="cta-mini">
+            <div class="row flex-row">
+              <div class="col-md-8 align-self-center">
+                <h3>{% if g.lang=='ar' %}اختر الماكينة المناسبة لتطبيقك{% else %}Pick the right machine for your use case{% endif %}</h3>
+                <p>{% if g.lang=='ar' %}راجع عائلة الماكينات أو أرسل استفسارًا لتوصية فنية مختصرة.{% else %}Browse the machine family or send an inquiry for a concise technical recommendation.{% endif %}</p>
+              </div>
+              <div class="col-md-4 text-right align-self-center">
+                <a class="btn btn-primary" href="{{ url_for('machines') }}">{{ t('nav.machines') }}</a>
+                <a class="btn btn-border" href="{{ url_for('contact') }}">{{ t('nav.contact') }}</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+{% endblock %}
+

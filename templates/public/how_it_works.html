@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}{{ t('nav.how') }} | {{ t('site.name') }}{% endblock %}
+
+{% block content %}
+  {% set header_bg = url_for('static', filename='images/machines/glass_tempering_furnace.png') %}
+  {% set title = t('nav.how') %}
+  {% set breadcrumbs = [
+    {'label': t('nav.home'), 'url': url_for('home')},
+    {'label': t('nav.how'), 'url': None}
+  ] %}
+  {% include "includes/page_header.html" %}
+
+  <section class="padding-bottom-medium">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8">
+          <h3>{% if g.lang=='ar' %}شرح خطوة بخطوة لعملية التقسية وتكامل خط الإنتاج{% else %}A step-by-step view of tempering and production-line integration{% endif %}</h3>
+          <p class="lead">
+            {% if g.lang=='ar' %}
+              تم تصميم سير العمل لضمان توزيع حراري متوازن وتوقيت نقل دقيق وتبريد سريع قابل للتكرار، مع قابلية ربط مراحل القطع والنقش والتخزين والمناولة.
+            {% else %}
+              The workflow is engineered for uniform heating, precise transfer timing, and repeatable quenching—while maintaining clean handoffs to cutting, engraving, storage, and automated handling.
+            {% endif %}
+          </p>
+        </div>
+      </div>
+
+      <div class="industris-space-30"></div>
+      <div class="row">
+        {% for s in steps %}
+          <div class="col-md-4 col-sm-6">
+            <div class="icon-box process-card">
+              <div class="icon-box-title">
+                <i class="icon {{ s['icon'] or 'ion-ios-rocket' }}"></i>
+                <h4>
+                  <span class="step-chip">{{ s['step_no'] }}</span>
+                  {{ s['title_ar'] if g.lang=='ar' else s['title_en'] }}
+                </h4>
+              </div>
+              <p>{{ s['description_ar'] if g.lang=='ar' else s['description_en'] }}</p>
+            </div>
+            <div class="industris-space-20"></div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+{% endblock %}
+

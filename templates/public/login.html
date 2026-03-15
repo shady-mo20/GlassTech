@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block title %}{{ t('nav.login') }} | {{ t('site.name') }}{% endblock %}
+
+{% block content %}
+  {% set header_bg = url_for('static', filename='images/machines/2436sktf.png') %}
+  {% set title = t('login.title') %}
+  {% set breadcrumbs = [
+    {'label': t('nav.home'), 'url': url_for('home')},
+    {'label': t('nav.login'), 'url': None}
+  ] %}
+  {% include "includes/page_header.html" %}
+
+  <section>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-7">
+          <h3>{{ t('login.title') }}</h3>
+          <p class="lead">{{ t('login.subtitle') }}</p>
+          <form class="login-form" method="post" action="{{ url_for('login', next=request.args.get('next')) }}">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>{{ t('login.identifier') }} *</label>
+                  <input type="text" name="identifier" class="form-control" required>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>{{ t('login.password') }} *</label>
+                  <input type="password" name="password" class="form-control" required>
+                </div>
+              </div>
+              <div class="col-md-12">
+                <button type="submit" class="btn btn-primary">{{ t('login.submit') }}</button>
+                <div class="industris-space-20"></div>
+                <div class="login-hint small-muted">
+                  {% if g.lang=='ar' %}
+                    للدخول التجريبي (محليًا): المسؤول <strong>admin</strong> وكلمة المرور <strong>Admin@12345</strong>.
+                  {% else %}
+                    For local demo: user <strong>admin</strong> password <strong>Admin@12345</strong>.
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <div class="col-md-5">
+          <div class="login-side-card">
+            <h4>{% if g.lang=='ar' %}ما الذي ستحصل عليه بعد تسجيل الدخول؟{% else %}What you get after login{% endif %}</h4>
+            <ul class="unstyle">
+              <li><i class="icon ion-md-checkmark-circle"></i>{% if g.lang=='ar' %}إدارة الماكينات والمواصفات والمعرض{% else %}Manage machines, specs, and gallery{% endif %}</li>
+              <li><i class="icon ion-md-checkmark-circle"></i>{% if g.lang=='ar' %}مراجعة واعتماد التحديثات (للمسؤول){% else %}Review & approve updates (admin){% endif %}</li>
+              <li><i class="icon ion-md-checkmark-circle"></i>{% if g.lang=='ar' %}استعراض الاستفسارات وتحديث حالتها{% else %}View inquiries and update statuses{% endif %}</li>
+            </ul>
+            <a href="{{ url_for('contact') }}" class="btn btn-border btn-full-width">{{ t('nav.contact') }}</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}
+

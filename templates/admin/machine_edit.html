@@ -1,0 +1,70 @@
+{% extends "admin/layout.html" %}
+{% set title = (('Edit machine' if g.lang=='en' else 'تعديل ماكينة') if machine else ('Add machine' if g.lang=='en' else 'إضافة ماكينة')) %}
+
+{% block admin_content %}
+  <h3>{{ title }}</h3>
+  <form method="post" class="admin-form">
+    <div class="row">
+      <div class="col-md-6 form-group">
+        <label>Slug *</label>
+        <input class="form-control" name="slug" required value="{{ machine['slug'] if machine else '' }}">
+      </div>
+      <div class="col-md-6 form-group">
+        <label>{% if g.lang=='ar' %}التصنيف{% else %}Category{% endif %}</label>
+        <input class="form-control" name="category" value="{{ machine['category'] if machine else '' }}">
+      </div>
+      <div class="col-md-6 form-group">
+        <label>Title (EN) *</label>
+        <input class="form-control" name="title_en" required value="{{ machine['title_en'] if machine else '' }}">
+      </div>
+      <div class="col-md-6 form-group">
+        <label>Title (AR) *</label>
+        <input class="form-control" name="title_ar" required value="{{ machine['title_ar'] if machine else '' }}">
+      </div>
+      <div class="col-md-6 form-group">
+        <label>Short description (EN) *</label>
+        <textarea class="form-control" rows="4" name="short_desc_en" required>{{ machine['short_desc_en'] if machine else '' }}</textarea>
+      </div>
+      <div class="col-md-6 form-group">
+        <label>Short description (AR) *</label>
+        <textarea class="form-control" rows="4" name="short_desc_ar" required>{{ machine['short_desc_ar'] if machine else '' }}</textarea>
+      </div>
+      <div class="col-md-6 form-group">
+        <label>Long description (EN) *</label>
+        <textarea class="form-control" rows="7" name="long_desc_en" required>{{ machine['long_desc_en'] if machine else '' }}</textarea>
+      </div>
+      <div class="col-md-6 form-group">
+        <label>Long description (AR) *</label>
+        <textarea class="form-control" rows="7" name="long_desc_ar" required>{{ machine['long_desc_ar'] if machine else '' }}</textarea>
+      </div>
+
+      <div class="col-md-6 form-group">
+        <label>Image path (relative to /static/) *</label>
+        <input class="form-control" name="image_path" required value="{{ machine['image_path'] if machine else 'images/machines/' }}">
+        <p class="small-muted">{% if g.lang=='ar' %}مثال: images/machines/glass_tempering_furnace.png{% else %}Example: images/machines/glass_tempering_furnace.png{% endif %}</p>
+      </div>
+      <div class="col-md-3 form-group">
+        <label>{% if g.lang=='ar' %}ترتيب{% else %}Sort order{% endif %}</label>
+        <input type="number" class="form-control" name="sort_order" value="{{ machine['sort_order'] if machine else 0 }}">
+      </div>
+      <div class="col-md-3 form-group">
+        <label>{% if g.lang=='ar' %}مميز{% else %}Featured{% endif %}</label>
+        <select class="form-control" name="is_featured">
+          <option value="0" {% if machine and machine['is_featured']==0 %}selected{% endif %}>{% if g.lang=='ar' %}لا{% else %}No{% endif %}</option>
+          <option value="1" {% if machine and machine['is_featured']==1 %}selected{% endif %}>{% if g.lang=='ar' %}نعم{% else %}Yes{% endif %}</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="industris-space-20"></div>
+    <button class="btn btn-primary" type="submit">
+      {% if g.user['role']=='developer' %}
+        {% if g.lang=='ar' %}إرسال للمراجعة{% else %}Submit for approval{% endif %}
+      {% else %}
+        {% if g.lang=='ar' %}حفظ{% else %}Save{% endif %}
+      {% endif %}
+    </button>
+    <a class="btn btn-border" href="{{ url_for('admin_machines') }}">{% if g.lang=='ar' %}إلغاء{% else %}Cancel{% endif %}</a>
+  </form>
+{% endblock %}
+

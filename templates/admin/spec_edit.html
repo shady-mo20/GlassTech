@@ -1,0 +1,52 @@
+{% extends "admin/layout.html" %}
+{% set title = (('Edit specification' if g.lang=='en' else 'تعديل مواصفة') if spec else ('Add specification' if g.lang=='en' else 'إضافة مواصفة')) %}
+
+{% block admin_content %}
+  <h3>{{ title }}</h3>
+  <form method="post" class="admin-form">
+    <div class="row">
+      <div class="col-md-6 form-group">
+        <label>{% if g.lang=='ar' %}الماكينة{% else %}Machine{% endif %} *</label>
+        <select class="form-control" name="machine_id" required>
+          {% for m in machines %}
+            <option value="{{ m['id'] }}" {% if spec and spec['machine_id']==m['id'] %}selected{% endif %}>
+              {{ m['title_ar'] if g.lang=='ar' else m['title_en'] }}
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col-md-6 form-group">
+        <label>Field key *</label>
+        <input class="form-control" name="field_key" required value="{{ spec['field_key'] if spec else '' }}" placeholder="e.g. heating_temperature">
+        <p class="small-muted">{% if g.lang=='ar' %}يستخدم هذا المفتاح لعرض اسم البند المترجم.{% else %}Used to render translated field labels.{% endif %}</p>
+      </div>
+      <div class="col-md-6 form-group">
+        <label>Value (EN) *</label>
+        <input class="form-control" name="value_en" required value="{{ spec['value_en'] if spec else '' }}">
+      </div>
+      <div class="col-md-6 form-group">
+        <label>Value (AR) *</label>
+        <input class="form-control" name="value_ar" required value="{{ spec['value_ar'] if spec else '' }}">
+      </div>
+      <div class="col-md-3 form-group">
+        <label>{% if g.lang=='ar' %}الوحدة{% else %}Unit{% endif %}</label>
+        <input class="form-control" name="unit" value="{{ spec['unit'] if spec else '' }}" placeholder="e.g. °C">
+      </div>
+      <div class="col-md-3 form-group">
+        <label>{% if g.lang=='ar' %}ترتيب{% else %}Sort order{% endif %}</label>
+        <input type="number" class="form-control" name="sort_order" value="{{ spec['sort_order'] if spec else 0 }}">
+      </div>
+    </div>
+
+    <div class="industris-space-20"></div>
+    <button class="btn btn-primary" type="submit">
+      {% if g.user['role']=='developer' %}
+        {% if g.lang=='ar' %}إرسال للمراجعة{% else %}Submit for approval{% endif %}
+      {% else %}
+        {% if g.lang=='ar' %}حفظ{% else %}Save{% endif %}
+      {% endif %}
+    </button>
+    <a class="btn btn-border" href="{{ url_for('admin_specifications') }}">{% if g.lang=='ar' %}إلغاء{% else %}Cancel{% endif %}</a>
+  </form>
+{% endblock %}
+

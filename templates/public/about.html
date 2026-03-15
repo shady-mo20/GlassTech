@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% block title %}{{ t('nav.about') }} | {{ t('site.name') }}{% endblock %}
+
+{% block content %}
+  {% set header_bg = url_for('static', filename='images/machines/precision_high_sankin.png') %}
+  {% set title = t('nav.about') %}
+  {% set breadcrumbs = [
+    {'label': t('nav.home'), 'url': url_for('home')},
+    {'label': t('nav.about'), 'url': None}
+  ] %}
+  {% include "includes/page_header.html" %}
+
+  <section class="padding-bottom-medium">
+    <div class="container">
+      <div class="row flex-row">
+        <div class="col-md-6">
+          <h3>{% if g.lang=='ar' %}حول المشروع{% else %}About the project{% endif %}</h3>
+          <p class="lead">
+            {% if g.lang=='ar' %}
+              هذا الموقع يعرض منظومة ماكينات لمعالجة الزجاج كحل صناعي متكامل، مع واجهة ثنائية اللغة ولوحة إدارة ونظام مراجعة واعتماد للتحديثات.
+            {% else %}
+              This website presents a full industrial glass-processing machinery ecosystem with a bilingual UI, admin panel, and a review/approval workflow for controlled updates.
+            {% endif %}
+          </p>
+          <p>
+            {% if g.lang=='ar' %}
+              تم تصميم المحتوى ليكون مناسبًا لعرض مشروع تخرج أو ملف أعمال احترافي، مع تركيز على القيمة التشغيلية: الاعتمادية، ثبات الجودة، وتقليل التوقفات.
+            {% else %}
+              The content is presentation-ready for a graduation defense or portfolio, with emphasis on operational value: reliability, consistent quality, and minimized downtime.
+            {% endif %}
+          </p>
+        </div>
+        <div class="col-md-6">
+          <img class="radius" src="{{ url_for('static', filename='images/machines/production_line.png') }}" alt="">
+        </div>
+      </div>
+
+      <div class="industris-space"></div>
+      <hr>
+      <div class="industris-space"></div>
+
+      <div class="row">
+        <div class="col-md-4 col-sm-6">
+          <div class="icon-box premium-card">
+            <div class="icon-box-title">
+              <i class="icon ion-md-clipboard"></i>
+              <h4>{% if g.lang=='ar' %}منهجية هندسية{% else %}Engineering approach{% endif %}</h4>
+            </div>
+            <p>
+              {% if g.lang=='ar' %}
+                بناء بنية Back-end قابلة للصيانة مع فصل واضح بين العرض والبيانات والتحكم والصلاحيات.
+              {% else %}
+                Maintainable backend architecture with clean separation of presentation, data, and access control.
+              {% endif %}
+            </p>
+          </div>
+          <div class="industris-space-20"></div>
+        </div>
+        <div class="col-md-4 col-sm-6">
+          <div class="icon-box premium-card">
+            <div class="icon-box-title">
+              <i class="icon ion-md-lock"></i>
+              <h4>{% if g.lang=='ar' %}صلاحيات وأدوار{% else %}Roles & permissions{% endif %}</h4>
+            </div>
+            <p>
+              {% if g.lang=='ar' %}
+                أدوار (مسؤول/مطور) مع جلسات تسجيل دخول ونظام مراجعة واعتماد للتغييرات قبل نشرها.
+              {% else %}
+                Admin/Developer roles with session login and a review/approval workflow before changes go live.
+              {% endif %}
+            </p>
+          </div>
+          <div class="industris-space-20"></div>
+        </div>
+        <div class="col-md-4 col-sm-6">
+          <div class="icon-box premium-card">
+            <div class="icon-box-title">
+              <i class="icon ion-md-globe"></i>
+              <h4>{% if g.lang=='ar' %}ثنائية اللغة{% else %}Bilingual UX{% endif %}</h4>
+            </div>
+            <p>
+              {% if g.lang=='ar' %}
+                دعم كامل للعربية والإنجليزية مع تبديل اتجاه العرض RTL/LTR وتناسق في المسافات والطباعة.
+              {% else %}
+                Full Arabic/English support with RTL/LTR direction switching and consistent spacing/typography.
+              {% endif %}
+            </p>
+          </div>
+          <div class="industris-space-20"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}
+

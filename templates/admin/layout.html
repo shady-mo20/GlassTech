@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+  {% set title = title or t('nav.admin') %}
+  {% set breadcrumbs = breadcrumbs or [
+    {'label': t('nav.home'), 'url': url_for('home')},
+    {'label': t('nav.admin'), 'url': url_for('admin_dashboard')},
+    {'label': title, 'url': None}
+  ] %}
+  {% include "includes/page_header.html" %}
+
+  <section class="padding-bottom-medium admin-section">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-3">
+          <div class="admin-nav">
+            <h4 class="admin-nav-title">{{ t('nav.admin') }}</h4>
+            <ul class="none-style admin-nav-list">
+              <li><a href="{{ url_for('admin_dashboard') }}">{{ t('admin.dashboard') }}</a></li>
+              <li><a href="{{ url_for('admin_machines') }}">{{ t('admin.machines') }}</a></li>
+              <li><a href="{{ url_for('admin_specifications') }}">{{ t('admin.specs') }}</a></li>
+              <li><a href="{{ url_for('admin_gallery') }}">{{ t('admin.gallery') }}</a></li>
+              <li><a href="{{ url_for('admin_inquiries') }}">{{ t('admin.inquiries') }}</a></li>
+              {% if g.user and g.user['role']=='admin_developer' %}
+                <li><a href="{{ url_for('admin_users') }}">{{ t('admin.users') }}</a></li>
+                <li><a href="{{ url_for('admin_review') }}">{{ t('admin.review') }}</a></li>
+              {% endif %}
+            </ul>
+            <div class="industris-space-20"></div>
+            <a href="{{ url_for('home') }}" class="btn btn-border btn-full-width">{% if g.lang=='ar' %}عودة للموقع{% else %}Back to site{% endif %}</a>
+          </div>
+        </div>
+        <div class="col-md-9">
+          {% block admin_content %}{% endblock %}
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}
+

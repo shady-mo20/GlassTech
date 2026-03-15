@@ -1,0 +1,68 @@
+{% extends "admin/layout.html" %}
+{% set title = t('admin.dashboard') %}
+
+{% block admin_content %}
+  <div class="row">
+    <div class="col-md-12">
+      <h3>{{ t('admin.dashboard') }}</h3>
+      <p class="small-muted">
+        {% if g.lang=='ar' %}
+          مرحبًا {{ g.user['username'] }} — الدور: {{ 'مسؤول/مطور' if g.user['role']=='admin_developer' else 'مطور' }}.
+        {% else %}
+          Welcome {{ g.user['username'] }} — role: {{ g.user['role'] }}.
+        {% endif %}
+      </p>
+    </div>
+  </div>
+
+  <div class="industris-space-20"></div>
+  <div class="row">
+    <div class="col-md-3 col-sm-6">
+      <div class="counter-box admin-metric">
+        <div class="counter-icon"><i class="icon ion-md-cog"></i></div>
+        <h3>{{ machines_count }}</h3>
+        <h4>{% if g.lang=='ar' %}ماكينات{% else %}Machines{% endif %}</h4>
+      </div>
+    </div>
+    <div class="col-md-3 col-sm-6">
+      <div class="counter-box admin-metric">
+        <div class="counter-icon"><i class="icon ion-md-images"></i></div>
+        <h3>{{ gallery_count }}</h3>
+        <h4>{% if g.lang=='ar' %}صور المعرض{% else %}Gallery items{% endif %}</h4>
+      </div>
+    </div>
+    <div class="col-md-3 col-sm-6">
+      <div class="counter-box admin-metric">
+        <div class="counter-icon"><i class="icon ion-md-mail"></i></div>
+        <h3>{{ inquiries_new }}</h3>
+        <h4>{% if g.lang=='ar' %}استفسارات جديدة{% else %}New inquiries{% endif %}</h4>
+      </div>
+    </div>
+    <div class="col-md-3 col-sm-6">
+      <div class="counter-box admin-metric">
+        <div class="counter-icon"><i class="icon ion-md-checkmark-circle"></i></div>
+        <h3>{{ pending_subs }}</h3>
+        <h4>{% if g.lang=='ar' %}طلبات قيد المراجعة{% else %}Pending submissions{% endif %}</h4>
+      </div>
+    </div>
+  </div>
+
+  <div class="industris-space"></div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="cta-mini">
+        <div class="row flex-row">
+          <div class="col-md-8 align-self-center">
+            <h3>{% if g.lang=='ar' %}إدارة المحتوى بسرعة{% else %}Quick management{% endif %}</h3>
+            <p>{% if g.lang=='ar' %}انتقل إلى الأقسام الأساسية لإدارة الماكينات والمواصفات والمعرض.{% else %}Jump to core sections to manage machines, specs, and gallery.{% endif %}</p>
+          </div>
+          <div class="col-md-4 text-right align-self-center">
+            <a class="btn btn-primary" href="{{ url_for('admin_machines') }}">{{ t('admin.machines') }}</a>
+            <a class="btn btn-border" href="{{ url_for('admin_gallery') }}">{{ t('admin.gallery') }}</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+

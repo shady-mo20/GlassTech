@@ -1,0 +1,300 @@
+/*
+  Project override stylesheet.
+
+  Why this file exists:
+  - Keep Envato template CSS intact (upgrade-safe).
+  - Apply premium industrial palette refinements.
+  - Implement bilingual typography and RTL fixes without rewriting the template.
+  - Improve admin usability while staying within the template design language.
+*/
+
+:root{
+  --ink: #03132b;
+  --steel: #3b4656;
+  --accent: #00aeef;
+  --accent-2: #ffd100; /* template primary */
+  --bg-soft: #f2f4f6;
+}
+
+body.dir-ltr{
+  font-family: "Inter", "Roboto", sans-serif;
+}
+body.dir-rtl{
+  font-family: "Cairo", "Tajawal", sans-serif;
+}
+
+/* Headings: keep weight but improve Arabic balance */
+body.dir-rtl h1, body.dir-rtl h2, body.dir-rtl h3, body.dir-rtl h4, body.dir-rtl h5, body.dir-rtl h6{
+  letter-spacing: 0;
+}
+
+/* Sticky navbar (premium, minimal) */
+#site-header{
+  position: sticky;
+  top: 0;
+  z-index: 1100;
+}
+
+/* Small premium tweaks */
+.slider-item{
+  position: relative;
+}
+.slider-item:after{
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(3,19,43,.72) 0%, rgba(3,19,43,.25) 55%, rgba(3,19,43,.10) 100%);
+  pointer-events: none;
+}
+body.dir-rtl .slider-item:after{
+  background: linear-gradient(270deg, rgba(3,19,43,.72) 0%, rgba(3,19,43,.25) 55%, rgba(3,19,43,.10) 100%);
+}
+.slider .slider-content{
+  max-width: 880px;
+}
+.slider .slider-content h1{
+  font-size: clamp(34px, 4.6vw, 64px);
+  line-height: 1.05;
+  margin-bottom: 16px;
+}
+.slider .slider-content h4{
+  letter-spacing: 2px;
+  opacity: .95;
+}
+.hero-subtitle{
+  color: rgba(255,255,255,.9);
+  font-size: 18px;
+  line-height: 30px;
+  max-width: 780px;
+  margin-bottom: 30px;
+}
+.hero-btn-secondary{
+  border-color: rgba(255,255,255,.5) !important;
+  color: #fff !important;
+}
+.hero-btn-secondary:hover{
+  border-color: var(--accent-2) !important;
+  color: var(--ink) !important;
+}
+.hero-img{
+  filter: contrast(1.05) saturate(1.05);
+}
+
+.premium-card{
+  border-radius: 2px;
+}
+.premium-table thead{
+  background: var(--bg-soft);
+  border-left: 2px solid var(--accent-2);
+}
+.premium-table td, .premium-table th{
+  vertical-align: top !important;
+}
+
+.gallery-caption{
+  padding-top: 14px;
+}
+.gallery-card img,
+.gallery-item img,
+.services-box .services-icon img{
+  width: 100%;
+  height: 260px;
+  object-fit: cover;
+}
+.services-box .services-icon img{
+  height: 200px;
+}
+.services-box{
+  border-radius: 2px;
+}
+.services-content p{
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.gallery-caption h4{
+  margin-bottom: 8px;
+  font-size: 18px;
+}
+.gallery-caption p{
+  margin-bottom: 0;
+  color: #707070;
+}
+.gallery-tag{
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: rgba(255, 209, 0, .25);
+  padding: 6px 10px;
+  margin-bottom: 10px;
+}
+
+.badge{
+  display: inline-block;
+  padding: 6px 10px;
+  border-radius: 2px;
+  font-weight: 700;
+  font-size: 12px;
+}
+.badge-soft{
+  background: rgba(3, 19, 43, .06);
+  color: var(--ink);
+}
+.badge-featured{
+  background: rgba(255, 209, 0, .25);
+  color: var(--ink);
+}
+.machine-meta .badge{
+  margin-right: 8px;
+}
+body.dir-rtl .machine-meta .badge{
+  margin-right: 0;
+  margin-left: 8px;
+}
+
+.spec-unit{
+  margin-left: 6px;
+  color: #b7b7b7;
+  font-weight: 600;
+}
+body.dir-rtl .spec-unit{
+  margin-left: 0;
+  margin-right: 6px;
+}
+
+.table-specs td.spec-key{
+  width: 45%;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.cta-mini{
+  background: var(--bg-soft);
+  border: 1px solid #e1e1e1;
+  border-bottom: 2px solid var(--accent-2);
+  padding: 30px;
+}
+
+.small-muted{
+  color: #b7b7b7;
+  font-size: 14px;
+}
+.login-side-card{
+  padding: 30px;
+  background: var(--bg-soft);
+  border: 1px solid #e1e1e1;
+  border-bottom: 2px solid var(--accent-2);
+}
+
+/* Make the language switcher look like a link (but keep as form for POST). */
+.linklike{
+  background: transparent;
+  border: none;
+  padding: 0;
+  color: #b7b7b7;
+  cursor: pointer;
+  font-weight: 500;
+}
+.linklike:hover{
+  color: var(--accent-2);
+}
+
+/* RTL fixes: swap common alignments without rewriting template markup */
+body.dir-rtl .main-navigation{
+  text-align: left;
+}
+body.dir-rtl .main-navigation ul ul li a{
+  text-align: right;
+}
+body.dir-rtl .topbar-left li{
+  border-left: none;
+  border-right: 1px solid rgba(183,183,183,0.2);
+}
+body.dir-rtl .topbar-left li:last-child{
+  border-right: 1px solid rgba(183,183,183,0.2);
+  border-left: 1px solid rgba(183,183,183,0.2);
+}
+body.dir-rtl .topbar-left i{
+  margin-right: 0;
+  margin-left: 8px;
+}
+body.dir-rtl .btn-m-r{
+  margin-right: 0;
+  margin-left: 10px;
+}
+body.dir-rtl .text-right{
+  text-align: left;
+}
+body.dir-rtl .border-left{
+  border-left: none;
+  border-right: 1px solid #ccc;
+  padding-left: 0;
+  padding-right: 50px;
+}
+
+/* Admin */
+.admin-section .page-title{
+  text-transform: none;
+}
+.admin-nav{
+  background: var(--bg-soft);
+  border: 1px solid #e1e1e1;
+  border-bottom: 2px solid var(--accent-2);
+  padding: 22px;
+}
+.admin-nav-title{
+  margin-bottom: 14px;
+}
+.admin-nav-list li{
+  padding: 8px 0;
+}
+.admin-nav-list a{
+  font-weight: 700;
+}
+.admin-nav-list a:hover{
+  text-decoration: none;
+}
+.btn.btn-xs{
+  padding: 8px 12px;
+  min-width: auto;
+  font-size: 12px;
+}
+.form-control.input-sm{
+  padding: 10px 14px;
+  height: auto;
+}
+.admin-form .form-control{
+  background: #fff;
+}
+.admin-kv{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px 20px;
+}
+.payload-pre{
+  background: #0c1220;
+  color: #e6edf3;
+  padding: 16px;
+  border-radius: 2px;
+  overflow-x: auto;
+}
+.inquiry-message{
+  max-width: 420px;
+  white-space: pre-wrap;
+}
+
+@media (max-width: 991px){
+  .admin-kv{
+    grid-template-columns: 1fr;
+  }
+  .hero-subtitle{
+    display: none; /* template hides buttons on very small, keep hero clean */
+  }
+  .slider-item:after{
+    background: rgba(3,19,43,.55);
+  }
+}
+

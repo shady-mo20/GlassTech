@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% block title %}{{ (machine['title_ar'] if g.lang=='ar' else machine['title_en']) }} | {{ t('site.name') }}{% endblock %}
+
+{% block content %}
+  {% set header_bg = url_for('static', filename=machine['image_path']) %}
+  {% set title = (machine['title_ar'] if g.lang=='ar' else machine['title_en']) %}
+  {% set breadcrumbs = [
+    {'label': t('nav.home'), 'url': url_for('home')},
+    {'label': t('nav.machines'), 'url': url_for('machines')},
+    {'label': title, 'url': None}
+  ] %}
+  {% include "includes/page_header.html" %}
+
+  <section class="padding-bottom-medium">
+    <div class="container">
+      <div class="row flex-row">
+        <div class="col-md-6">
+          <img class="radius" src="{{ url_for('static', filename=machine['image_path']) }}" alt="">
+          <div class="industris-space-20"></div>
+          <div class="machine-meta">
+            <span class="badge badge-soft">{% if machine['category'] %}{{ machine['category'] }}{% else %}{% if g.lang=='ar' %}ماكينة{% else %}Machine{% endif %}{% endif %}</span>
+            {% if machine['is_featured'] == 1 %}
+              <span class="badge badge-featured">{% if g.lang=='ar' %}مميز{% else %}Featured{% endif %}</span>
+            {% endif %}
+          </div>
+        </div>
+        <div class="col-md-6 align-self-center">
+          <h3>{% if g.lang=='ar' %}نظرة تقنية{% else %}Technical overview{% endif %}</h3>
+          <p class="lead">{{ machine['short_desc_ar'] if g.lang=='ar' else machine['short_desc_en'] }}</p>
+          <p>{{ machine['long_desc_ar'] if g.lang=='ar' else machine['long_desc_en'] }}</p>
+          <div class="industris-space-20"></div>
+          <a class="btn btn-primary" href="{{ url_for('contact') }}">
+            {% if g.lang=='ar' %}اطلب معلومات أو تسعير{% else %}Request information{% endif %}
+            <i class="icon ion-md-paper-plane"></i>
+          </a>
+          <a class="btn btn-border" href="{{ url_for('gallery') }}">
+            {% if g.lang=='ar' %}عرض المعرض{% else %}View gallery{% endif %}
+          </a>
+        </div>
+      </div>
+
+      {% if specs %}
+        <div class="industris-space"></div>
+        <hr>
+        <div class="industris-space"></div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <h3>{% if g.lang=='ar' %}المواصفات الفنية{% else %}Technical specifications{% endif %}</h3>
+            <div class="table-responsive">
+              <table class="table table-specs">
+                <thead>
+                  <tr>
+                    <th>{% if g.lang=='ar' %}البند{% else %}Field{% endif %}</th>
+                    <th>{% if g.lang=='ar' %}القيمة{% else %}Value{% endif %}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for s in specs %}
+                    <tr>
+                      <td class="spec-key">{{ t('spec.field.' ~ s['field_key'], s['field_key']) }}</td>
+                      <td class="spec-val">
+                        {{ s['value_ar'] if g.lang=='ar' else s['value_en'] }}
+                        {% if s['unit'] %}<span class="spec-unit">{{ s['unit'] }}</span>{% endif %}
+                      </td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      {% endif %}
+
+      {% if related_gallery %}
+        <div class="industris-space"></div>
+        <hr>
+        <div class="industris-space"></div>
+        <div class="row">
+          <div class="col-md-12">
+            <h3>{% if g.lang=='ar' %}صور مرتبطة{% else %}Related media{% endif %}</h3>
+          </div>
+        </div>
+        <div class="industris-space-20"></div>
+        <div class="row">
+          {% for item in related_gallery %}
+            <div class="col-md-4 col-sm-6">
+              <div class="project-item gallery-item">
+                <div class="inner">
+                  <a href="{{ url_for('static', filename=item['image_path']) }}" class="image-link imghvr-shutter-out-vert">
+                    <img src="{{ url_for('static', filename=item['image_path']) }}" alt="">
+                  </a>
+                  <div class="gallery-caption">
+                    <h4>{{ item['title_ar'] if g.lang=='ar' else item['title_en'] }}</h4>
+                    <p>{{ item['description_ar'] if g.lang=='ar' else item['description_en'] }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+  </section>
+{% endblock %}
+

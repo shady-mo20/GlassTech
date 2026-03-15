@@ -1,0 +1,40 @@
+{% extends "admin/layout.html" %}
+{% set title = t('admin.review') %}
+
+{% block admin_content %}
+  <h3>{{ t('admin.review') }}</h3>
+  <p class="small-muted">{% if g.lang=='ar' %}هذه القائمة تعرض التغييرات التي أرسلها المطورون وتحتاج اعتمادًا قبل تطبيقها على قاعدة البيانات.{% else %}Developer-submitted changes waiting for approval before they apply to the database.{% endif %}</p>
+
+  <div class="industris-space-10"></div>
+  <div class="table-responsive">
+    <table class="table premium-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>{% if g.lang=='ar' %}الهدف{% else %}Target{% endif %}</th>
+          <th>{% if g.lang=='ar' %}الإجراء{% else %}Action{% endif %}</th>
+          <th>{% if g.lang=='ar' %}المعرف{% else %}Target ID{% endif %}</th>
+          <th>{% if g.lang=='ar' %}تاريخ{% else %}Created{% endif %}</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for s in submissions %}
+          <tr>
+            <td>{{ s['id'] }}</td>
+            <td><span class="badge badge-soft">{{ s['target_table'] }}</span></td>
+            <td>{{ s['action'] }}</td>
+            <td>{{ s['target_id'] or '-' }}</td>
+            <td class="small-muted">{{ s['created_at'] }}</td>
+            <td class="text-right">
+              <a class="btn btn-primary btn-xs" href="{{ url_for('admin_review_detail', submission_id=s['id']) }}">
+                {% if g.lang=='ar' %}مراجعة{% else %}Review{% endif %}
+              </a>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}
+

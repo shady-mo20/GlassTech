@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block title %}{{ t('nav.contact') }} | {{ t('site.name') }}{% endblock %}
+
+{% block content %}
+  {% set header_bg = url_for('static', filename='images/machines/glass_tempering_furnace.png') %}
+  {% set title = t('contact.title') %}
+  {% set breadcrumbs = [
+    {'label': t('nav.home'), 'url': url_for('home')},
+    {'label': t('nav.contact'), 'url': None}
+  ] %}
+  {% include "includes/page_header.html" %}
+
+  <section class="bg-contact-info">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 col-sm-12">
+          <h4 class="text-primary">{% if g.lang=='ar' %}معلومات التواصل{% else %}CONTACT INFO{% endif %}</h4>
+          <div class="contact-info">
+            <h2>{% if g.lang=='ar' %}خط المساعدة:{% else %}Hotline:{% endif %} <span class="text-primary">{{ t('footer.phone') }}</span></h2>
+            <p><i class="icon ion-md-mail"></i> {{ t('footer.email') }}</p>
+            <p><i class="icon ion-md-pin"></i> {{ t('footer.location') }}</p>
+          </div>
+          <div class="space-industris" style="height: 40px;"></div>
+          <hr>
+        </div>
+        <div class="col-md-12">
+          <form class="form-contact" action="{{ url_for('contact') }}" method="post">
+            <h3>{{ t('contact.form.title') }}</h3>
+            <p class="small-muted">{{ t('contact.subtitle') }}</p>
+            <div class="row">
+              <div class="col-md-4 form-group">
+                <input type="text" name="name" class="form-control" placeholder="{{ t('contact.form.name') }}" required>
+              </div>
+              <div class="col-md-4 form-group">
+                <input type="text" name="phone" class="form-control" placeholder="{{ t('contact.form.phone') }}">
+              </div>
+              <div class="col-md-4 form-group">
+                <input type="email" name="email" class="form-control" placeholder="{{ t('contact.form.email') }}" required>
+              </div>
+              <div class="col-md-12 form-group">
+                <textarea rows="6" name="message" class="form-control" placeholder="{{ t('contact.form.message') }}" required></textarea>
+              </div>
+              <div class="col-md-12">
+                <button type="submit" class="wpcf7-form-control wpcf7-submit btn btn-primary">
+                  {{ t('contact.form.submit') }} <i class="icon ion-md-checkmark-circle"></i>
+                </button>
+                <a href="{{ url_for('machines') }}" class="wpcf7-form-control wpcf7-submit btn btn-border">
+                  {% if g.lang=='ar' %}استعرض الماكينات{% else %}Browse machines{% endif %}
+                </a>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}
+

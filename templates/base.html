@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="{{ g.lang }}" dir="{{ g.dir }}">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>{% block title %}{{ t('site.name') }}{% endblock %}</title>
+
+  <!-- Typography: keep template design language, upgrade fonts for EN/AR -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Cairo:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Envato template CSS (copied into /static/vendor/industris/) -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='vendor/industris/css/bootstrap.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='vendor/industris/css/font-awesome.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='vendor/industris/css/ionicon.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='vendor/industris/css/slick.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='vendor/industris/css/slick-theme.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='vendor/industris/css/magnific-popup.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='vendor/industris/style.css') }}">
+
+  <!-- Project overrides (premium + bilingual RTL/LTR fixes) -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}">
+
+  <link rel="shortcut icon" href="{{ url_for('static', filename='vendor/industris/favicon.png') }}">
+</head>
+
+<body class="{% if g.dir == 'rtl' %}dir-rtl{% else %}dir-ltr{% endif %}">
+  <div id="page" class="site">
+    {% include "includes/navbar.html" %}
+
+    <div id="content" class="site-content">
+      {% include "includes/flash.html" %}
+      {% block content %}{% endblock %}
+    </div>
+
+    {% include "includes/footer.html" %}
+  </div>
+
+  <!-- Envato template JS -->
+  <script src="{{ url_for('static', filename='vendor/industris/js/jquery.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='vendor/industris/js/slick.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='vendor/industris/js/jquery.sticky.js') }}"></script>
+  <script src="{{ url_for('static', filename='vendor/industris/js/countto.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='vendor/industris/js/jquery.magnific-popup.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='vendor/industris/js/jquery.isotope.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='vendor/industris/js/scripts.js') }}"></script>
+
+  <!-- App JS (i18n helpers + small UX fixes) -->
+  <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+  {% block extra_js %}{% endblock %}
+</body>
+</html>
+

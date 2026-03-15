@@ -1,0 +1,24 @@
+{# Reusable page header (subheader) in Envato style #}
+<div class="page-header" style="background: url('{{ header_bg or url_for('static', filename='images/machines/production_line.png') }}') no-repeat center center; background-size: cover;">
+  <div class="container">
+    <div class="breadc-box no-line">
+      <div class="row">
+        <div class="col-md-12">
+          <h2 class="page-title">{{ title }}</h2>
+          {% if breadcrumbs %}
+            <ul id="breadcrumbs" class="breadcrumbs none-style">
+              {% for b in breadcrumbs %}
+                {% if b.url %}
+                  <li><a href="{{ b.url }}">{{ b.label }}</a></li>
+                {% else %}
+                  <li class="active">{{ b.label }}</li>
+                {% endif %}
+              {% endfor %}
+            </ul>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

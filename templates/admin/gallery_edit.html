@@ -1,0 +1,68 @@
+{% extends "admin/layout.html" %}
+{% set title = (('Edit gallery item' if g.lang=='en' else 'تعديل عنصر') if item else ('Add gallery item' if g.lang=='en' else 'إضافة عنصر')) %}
+
+{% block admin_content %}
+  <h3>{{ title }}</h3>
+  <form method="post" class="admin-form">
+    <div class="row">
+      <div class="col-md-6 form-group">
+        <label>Title (EN) *</label>
+        <input class="form-control" name="title_en" required value="{{ item['title_en'] if item else '' }}">
+      </div>
+      <div class="col-md-6 form-group">
+        <label>Title (AR) *</label>
+        <input class="form-control" name="title_ar" required value="{{ item['title_ar'] if item else '' }}">
+      </div>
+      <div class="col-md-6 form-group">
+        <label>Description (EN) *</label>
+        <textarea class="form-control" rows="4" name="description_en" required>{{ item['description_en'] if item else '' }}</textarea>
+      </div>
+      <div class="col-md-6 form-group">
+        <label>Description (AR) *</label>
+        <textarea class="form-control" rows="4" name="description_ar" required>{{ item['description_ar'] if item else '' }}</textarea>
+      </div>
+      <div class="col-md-4 form-group">
+        <label>{% if g.lang=='ar' %}التصنيف{% else %}Category{% endif %}</label>
+        <input class="form-control" name="category" value="{{ item['category'] if item else '' }}">
+      </div>
+      <div class="col-md-4 form-group">
+        <label>{% if g.lang=='ar' %}ربط بماكينة{% else %}Link to machine{% endif %}</label>
+        <select class="form-control" name="machine_id">
+          <option value="0">{% if g.lang=='ar' %}بدون{% else %}None{% endif %}</option>
+          {% for m in machines %}
+            <option value="{{ m['id'] }}" {% if item and item['machine_id']==m['id'] %}selected{% endif %}>
+              {{ m['title_ar'] if g.lang=='ar' else m['title_en'] }}
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col-md-4 form-group">
+        <label>{% if g.lang=='ar' %}منشور{% else %}Published{% endif %}</label>
+        <select class="form-control" name="is_published">
+          <option value="1" {% if item and item['is_published']==1 %}selected{% endif %}>{% if g.lang=='ar' %}نعم{% else %}Yes{% endif %}</option>
+          <option value="0" {% if item and item['is_published']==0 %}selected{% endif %}>{% if g.lang=='ar' %}لا{% else %}No{% endif %}</option>
+        </select>
+      </div>
+      <div class="col-md-8 form-group">
+        <label>Image path (relative to /static/) *</label>
+        <input class="form-control" name="image_path" required value="{{ item['image_path'] if item else 'images/machines/' }}">
+        <p class="small-muted">{% if g.lang=='ar' %}مثال: images/machines/production_line.png{% else %}Example: images/machines/production_line.png{% endif %}</p>
+      </div>
+      <div class="col-md-2 form-group">
+        <label>{% if g.lang=='ar' %}ترتيب{% else %}Sort order{% endif %}</label>
+        <input type="number" class="form-control" name="sort_order" value="{{ item['sort_order'] if item else 0 }}">
+      </div>
+    </div>
+
+    <div class="industris-space-20"></div>
+    <button class="btn btn-primary" type="submit">
+      {% if g.user['role']=='developer' %}
+        {% if g.lang=='ar' %}إرسال للمراجعة{% else %}Submit for approval{% endif %}
+      {% else %}
+        {% if g.lang=='ar' %}حفظ{% else %}Save{% endif %}
+      {% endif %}
+    </button>
+    <a class="btn btn-border" href="{{ url_for('admin_gallery') }}">{% if g.lang=='ar' %}إلغاء{% else %}Cancel{% endif %}</a>
+  </form>
+{% endblock %}
+

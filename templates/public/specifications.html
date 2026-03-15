@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% block title %}{{ t('nav.specs') }} | {{ t('site.name') }}{% endblock %}
+
+{% block content %}
+  {% set header_bg = url_for('static', filename='images/machines/glass_tempering_furnace.png') %}
+  {% set title = t('nav.specs') %}
+  {% set breadcrumbs = [
+    {'label': t('nav.home'), 'url': url_for('home')},
+    {'label': t('nav.specs'), 'url': None}
+  ] %}
+  {% include "includes/page_header.html" %}
+
+  <section class="padding-bottom-medium">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8">
+          <h3>{% if g.lang=='ar' %}مواصفات فنية منظمة وقابلة للتطوير{% else %}Structured, scalable technical specifications{% endif %}</h3>
+          <p class="lead">
+            {% if g.lang=='ar' %}
+              يتم عرض المواصفات مباشرة من قاعدة البيانات لضمان الاتساق وسهولة التعديل من لوحة الإدارة، مع دعم كامل للعربية والإنجليزية.
+            {% else %}
+              Specs are rendered directly from the database to keep them consistent, editable from the admin panel, and fully bilingual (EN/AR).
+            {% endif %}
+          </p>
+        </div>
+      </div>
+
+      {% if featured %}
+        <div class="industris-space-30"></div>
+        <div class="row flex-row">
+          <div class="col-md-6">
+            <img class="radius" src="{{ url_for('static', filename=featured['image_path']) }}" alt="">
+          </div>
+          <div class="col-md-6 align-self-center">
+            <h3>{{ featured['title_ar'] if g.lang=='ar' else featured['title_en'] }}</h3>
+            <p class="lead">{{ featured['short_desc_ar'] if g.lang=='ar' else featured['short_desc_en'] }}</p>
+            <a class="btn btn-primary" href="{{ url_for('machine_detail', slug=featured['slug']) }}">
+              {% if g.lang=='ar' %}عرض تفاصيل الماكينة{% else %}View machine details{% endif %}
+              <i class="icon ion-md-add-circle-outline"></i>
+            </a>
+          </div>
+        </div>
+      {% endif %}
+
+      <div class="industris-space"></div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="table-responsive">
+            <table class="table table-specs premium-table">
+              <thead>
+                <tr>
+                  <th>{% if g.lang=='ar' %}البند{% else %}Field{% endif %}</th>
+                  <th>{% if g.lang=='ar' %}القيمة{% else %}Value{% endif %}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for s in specs %}
+                  <tr>
+                    <td class="spec-key">{{ t('spec.field.' ~ s['field_key'], s['field_key']) }}</td>
+                    <td class="spec-val">
+                      {{ s['value_ar'] if g.lang=='ar' else s['value_en'] }}
+                      {% if s['unit'] %}<span class="spec-unit">{{ s['unit'] }}</span>{% endif %}
+                    </td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="industris-space-30"></div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="cta-mini">
+            <div class="row flex-row">
+              <div class="col-md-8 align-self-center">
+                <h3>{% if g.lang=='ar' %}هل تحتاج مواصفات لموديل مختلف؟{% else %}Need specs for another machine?{% endif %}</h3>
+                <p>{% if g.lang=='ar' %}أرسل استفسارًا وسنجهز لك ملخصًا فنيًا مناسبًا للحالة التشغيلية المطلوبة.{% else %}Send an inquiry and we’ll prepare a technical summary aligned with your operating needs.{% endif %}</p>
+              </div>
+              <div class="col-md-4 text-right align-self-center">
+                <a class="btn btn-primary" href="{{ url_for('contact') }}">{{ t('home.hero.cta.secondary') }}</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}
+

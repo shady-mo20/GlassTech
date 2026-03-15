@@ -1,0 +1,55 @@
+{% extends "admin/layout.html" %}
+{% set title = t('admin.gallery') %}
+
+{% block admin_content %}
+  <div class="row">
+    <div class="col-md-8">
+      <h3>{{ t('admin.gallery') }}</h3>
+      <p class="small-muted">{% if g.lang=='ar' %}إدارة عناصر المعرض مع عناوين ووصف ثنائي اللغة.{% else %}Manage gallery items with bilingual captions.{% endif %}</p>
+    </div>
+    <div class="col-md-4 text-right">
+      <a href="{{ url_for('admin_gallery_edit') }}" class="btn btn-primary">{% if g.lang=='ar' %}إضافة عنصر{% else %}Add item{% endif %}</a>
+    </div>
+  </div>
+
+  <div class="industris-space-20"></div>
+  <div class="table-responsive">
+    <table class="table premium-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>{% if g.lang=='ar' %}العنوان{% else %}Title{% endif %}</th>
+          <th>{% if g.lang=='ar' %}التصنيف{% else %}Category{% endif %}</th>
+          <th>{% if g.lang=='ar' %}منشور{% else %}Published{% endif %}</th>
+          <th>{% if g.lang=='ar' %}ترتيب{% else %}Order{% endif %}</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for it in items %}
+          <tr>
+            <td>{{ it['id'] }}</td>
+            <td>
+              <strong>{{ it['title_ar'] if g.lang=='ar' else it['title_en'] }}</strong><br>
+              <span class="small-muted">{{ it['image_path'] }}</span>
+            </td>
+            <td>{{ it['category'] or '-' }}</td>
+            <td>{{ '✓' if it['is_published']==1 else '-' }}</td>
+            <td>{{ it['sort_order'] }}</td>
+            <td class="text-right">
+              <a class="btn btn-default btn-xs" href="{{ url_for('static', filename=it['image_path']) }}" target="_blank">{% if g.lang=='ar' %}فتح{% else %}Open{% endif %}</a>
+              <a class="btn btn-primary btn-xs" href="{{ url_for('admin_gallery_edit', id=it['id']) }}">{% if g.lang=='ar' %}تعديل{% else %}Edit{% endif %}</a>
+              {% if g.user['role']=='admin_developer' %}
+                <form method="post" action="{{ url_for('admin_gallery_delete') }}" style="display:inline" onsubmit="return confirm('Delete?')">
+                  <input type="hidden" name="id" value="{{ it['id'] }}">
+                  <button class="btn btn-border btn-xs" type="submit">{% if g.lang=='ar' %}حذف{% else %}Delete{% endif %}</button>
+                </form>
+              {% endif %}
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}
+

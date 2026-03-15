@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}{{ code }} | {{ t('site.name') }}{% endblock %}
+
+{% block content %}
+  <section class="padding-bottom-medium">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8">
+          <h2>{{ code }}</h2>
+          <p class="lead">{{ message }}</p>
+          <div class="industris-space-20"></div>
+          <a class="btn btn-primary" href="{{ url_for('home') }}">{{ t('nav.home') }}</a>
+          <a class="btn btn-border" href="{{ url_for('contact') }}">{{ t('nav.contact') }}</a>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}
+

@@ -1,0 +1,54 @@
+{% extends "admin/layout.html" %}
+{% set title = t('admin.specs') %}
+
+{% block admin_content %}
+  <div class="row">
+    <div class="col-md-8">
+      <h3>{{ t('admin.specs') }}</h3>
+      <p class="small-muted">{% if g.lang=='ar' %}المواصفات مخزنة كصفوف منظمة لكل ماكينة لسهولة العرض والتحكم.{% else %}Specifications are stored as ordered rows per machine for clean table display.{% endif %}</p>
+    </div>
+    <div class="col-md-4 text-right">
+      <a href="{{ url_for('admin_spec_edit') }}" class="btn btn-primary">{% if g.lang=='ar' %}إضافة بند{% else %}Add spec row{% endif %}</a>
+    </div>
+  </div>
+
+  <div class="industris-space-20"></div>
+  <div class="table-responsive">
+    <table class="table premium-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>{% if g.lang=='ar' %}الماكينة{% else %}Machine{% endif %}</th>
+          <th>{% if g.lang=='ar' %}المفتاح{% else %}Field key{% endif %}</th>
+          <th>{% if g.lang=='ar' %}القيمة{% else %}Value{% endif %}</th>
+          <th>{% if g.lang=='ar' %}ترتيب{% else %}Order{% endif %}</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for s in specs %}
+          <tr>
+            <td>{{ s['id'] }}</td>
+            <td>{{ s['machine_title_ar'] if g.lang=='ar' else s['machine_title_en'] }}</td>
+            <td>
+              <strong>{{ s['field_key'] }}</strong><br>
+              <span class="small-muted">{{ t('spec.field.' ~ s['field_key'], '') }}</span>
+            </td>
+            <td>{{ s['value_ar'] if g.lang=='ar' else s['value_en'] }}{% if s['unit'] %} <span class="spec-unit">{{ s['unit'] }}</span>{% endif %}</td>
+            <td>{{ s['sort_order'] }}</td>
+            <td class="text-right">
+              <a class="btn btn-primary btn-xs" href="{{ url_for('admin_spec_edit', id=s['id']) }}">{% if g.lang=='ar' %}تعديل{% else %}Edit{% endif %}</a>
+              {% if g.user['role']=='admin_developer' %}
+                <form method="post" action="{{ url_for('admin_spec_delete') }}" style="display:inline" onsubmit="return confirm('Delete?')">
+                  <input type="hidden" name="id" value="{{ s['id'] }}">
+                  <button class="btn btn-border btn-xs" type="submit">{% if g.lang=='ar' %}حذف{% else %}Delete{% endif %}</button>
+                </form>
+              {% endif %}
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}
+
